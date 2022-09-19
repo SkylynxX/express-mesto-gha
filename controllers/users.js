@@ -37,7 +37,8 @@ module.exports.updateUserInfoByID = (req, res) => User.findByIdAndUpdate(
     {
       'name': req.body.name,
       'about': req.body.about
-    }
+    },
+    { runValidators: true }
   )
   .then((user) => {
     if (!user) {
@@ -56,7 +57,8 @@ module.exports.updateUserInfoByID = (req, res) => User.findByIdAndUpdate(
 
 module.exports.updateUserAvatarByID = (req, res) => User.findByIdAndUpdate(
     req.user._id,
-    { 'avatar' : req.body.avatar }
+    { 'avatar' : req.body.avatar },
+    { runValidators: true }
   )
   .then((user) => {
     if (!user) {

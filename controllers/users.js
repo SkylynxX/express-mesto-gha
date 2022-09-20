@@ -17,7 +17,13 @@ module.exports.getUserByID = (req, res) => User.findById(req.params.userId)
       return res.status(STATUS_OK).send({ 'user' : user });
     }
   })
-  .catch(() => res.status(ERROR_DEFAULT).send({ 'message' : 'Ошибка по умолчанию.' }));
+  .catch((err) => {
+    if (err.name === 'CastError') {
+      res.status(ERROR_BAD_REQUEST).send({ message: 'Переданы некорректные для получения пользователя.' });
+    } else {
+      res.status(ERROR_DEFAULT).send({ 'message' : 'Ошибка по умолчанию.' })
+    }
+  });
 
 module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
@@ -38,7 +44,10 @@ module.exports.updateUserInfoByID = (req, res) => User.findByIdAndUpdate(
       'name': req.body.name,
       'about': req.body.about
     },
-    { runValidators: true }
+    {
+      runValidators: true,
+      new: true
+    }
   )
   .then((user) => {
     if (!user) {
@@ -58,7 +67,10 @@ module.exports.updateUserInfoByID = (req, res) => User.findByIdAndUpdate(
 module.exports.updateUserAvatarByID = (req, res) => User.findByIdAndUpdate(
     req.user._id,
     { 'avatar' : req.body.avatar },
-    { runValidators: true }
+    {
+      new: true,
+      runValidators: true
+    }
   )
   .then((user) => {
     if (!user) {

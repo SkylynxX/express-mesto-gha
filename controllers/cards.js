@@ -30,7 +30,13 @@ module.exports.deleteCardByID = (req, res) => Card.findByIdAndRemove(req.params.
       res.status(STATUS_OK).send({ 'cardId' : card._id });
     }
   })
-  .catch(() => res.status(ERROR_DEFAULT).send({ 'message' : 'Ошибка по умолчанию.' }));
+  .catch((err) => {
+    if (err.name === 'CastError') {
+      res.status(ERROR_BAD_REQUEST).send({ message: 'Переданы некорректные при удалении карточки.' });
+    } else {
+      res.status(ERROR_DEFAULT).send({ 'message' : 'Ошибка по умолчанию.' })
+    }
+  });
 
 module.exports.likeCard = (req, res) => Card.findByIdAndUpdate(
     req.params.cardId,

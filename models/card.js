@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//Поля cхемы для данных карточки
+// Поля cхемы для данных карточки
 const cardSchema = new mongoose.Schema({
   name: {
     type: String,

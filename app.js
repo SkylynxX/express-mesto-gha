@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 app.use(routerUsers);
 app.use(routerCards);
 
-app.use('*', (req, res) => res.status(ERROR_NOT_FOUND).send('Был запрошен несуществующий роут.'));
+app.use('*', (req, res) => res.status(ERROR_NOT_FOUND).send({ message: 'Был запрошен несуществующий роут.' }));
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен. доступен по адрессу http://localhost:${PORT}`);

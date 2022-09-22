@@ -6,7 +6,7 @@ const ERROR_NOT_FOUND = 404;
 const ERROR_DEFAULT = 500;
 
 module.exports.getUsers = (req, res) => User.find({})
-  .then((users) => res.status(STATUS_OK).send({ data: users}))
+  .then((users) => res.status(STATUS_OK).send({ data: users }))
   .catch(() => res.status(ERROR_DEFAULT).send({ message: 'Ошибка по умолчанию.' }));
 
 module.exports.getUserByID = (req, res) => User.findById(req.params.userId)

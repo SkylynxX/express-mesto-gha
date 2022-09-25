@@ -30,7 +30,7 @@ module.exports.deleteCardByID = (req, res, next) => Card.findByIdAndRemove(req.p
     } else {
       Card.findByIdAndDelete(req.params.cardId)
         .then((cardRes) => {
-          res.send({ cardId: cardRes._id });
+          res.status(STATUS_OK).send({ cardId: cardRes._id });
         })
         .catch(next);
     }

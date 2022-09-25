@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
+// const validator = require('validator');
 const URL_REGEXP = /^https?:\/\/[\da-z-]+.[\da-z-]{2,}.?[\d\w\-/.]{0,}$/i;
 // Поля cхемы для данных карточки
 const cardSchema = new mongoose.Schema({

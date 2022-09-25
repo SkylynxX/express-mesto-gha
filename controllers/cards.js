@@ -29,8 +29,8 @@ module.exports.deleteCardByID = (req, res, next) => Card.findByIdAndRemove(req.p
       throw new ErrorForbidden('Операция удаления карточки недоступна данному пользователю.');
     } else {
       Card.findByIdAndDelete(req.params.cardId)
-        .then((card) => {
-          res.send({ cardId: card._id });
+        .then((cardRes) => {
+          res.send({ cardId: cardRes._id });
         })
         .catch(next);
     }
@@ -46,7 +46,7 @@ module.exports.likeCard = (req, res, next) => Card.findByIdAndUpdate(
   .then((card) => res.status(STATUS_OK).send({ data: card }))
   .catch(next);
 
-module.exports.dislikeCard = (req, res) => Card.findByIdAndUpdate(
+module.exports.dislikeCard = (req, res, next) => Card.findByIdAndUpdate(
   req.params.cardId,
   { $pull: { likes: req.user._id } },
   { new: true },

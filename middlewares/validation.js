@@ -1,10 +1,12 @@
 const { celebrate, Joi } = require('celebrate');
 
+const URL_REGEXP = /^https?:\/\/[\da-z-]+.[\da-z-]{2,}.?[\d\w\-/.]{0,}$/i;
+
 const validateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().uri(),
+    avatar: Joi.string().pattern(URL_REGEXP), // ?? uri() don't work
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
@@ -39,7 +41,7 @@ const validateLogin = celebrate({
 const validateCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().uri(),
+    link: Joi.string().required().pattern(URL_REGEXP), // ?? uri() don't work
   }),
 });
 

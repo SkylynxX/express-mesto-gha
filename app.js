@@ -9,6 +9,7 @@ const routerCards = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
 const { validateUser, validateLogin } = require('./middlewares/validation');
 const auth = require('./middlewares/auth');
+const errorJSON = require('./middlewares/error-json');
 const ErrorNotFound = require('./errors/error-not-found');
 
 const { PORT = 3000 } = process.env;
@@ -30,7 +31,7 @@ app.use(routerCards);
 
 app.use('*', (req, res, next) => next(new ErrorNotFound()));
 app.use(errors());
-
+app.use(errorJSON);
 app.listen(PORT, () => {
   console.log(`Сервер запущен. доступен по адрессу http://localhost:${PORT}`);
 });

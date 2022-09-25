@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
+const URL_REGEXP = /^https?:\/\/[\da-z-]+.[\da-z-]{2,}.?[\d\w\-/.]{0,}$/i;
 // Поля cхемы для данных карточки
 const cardSchema = new mongoose.Schema({
   name: {
@@ -10,6 +12,12 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+    validate: {
+      validator: (linkToCardImage) => URL_REGEXP.test(linkToCardImage),
+      // validator: (linkToCardImage) => validator.isURL(linkToCardImage),
+      // TODO тест image-url-validator
+      message: 'Ошибка в ссылке на картинку карточки',
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

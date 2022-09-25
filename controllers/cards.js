@@ -29,9 +29,7 @@ module.exports.deleteCardByID = (req, res, next) => Card.findByIdAndRemove(req.p
       throw new ErrorForbidden('Операция удаления карточки недоступна данному пользователю.');
     } else {
       Card.findByIdAndDelete(req.params.cardId)
-        .then((cardRes) => {
-          res.status(STATUS_OK).send({ cardId: cardRes._id });
-        })
+        .then(() => res.status(STATUS_OK).send({ cardId: card._id }))
         .catch(next);
     }
   })

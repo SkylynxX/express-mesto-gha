@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 
-const URL_REGEXP = /^https?:\/\/[\da-z-]+.[\da-z-]{2,}.?[\d\w\-/.]{0,}$/i;
+const URL_REGEXP = /^https?:\/\/[\da-z-]+\.[\da-z-]+\.?[\d\w\-/.]*$/i;
 
 const validateUser = celebrate({
   body: Joi.object().keys({

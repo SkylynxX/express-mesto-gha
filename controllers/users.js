@@ -27,13 +27,7 @@ module.exports.getUserByID = (req, res, next) => User.findById(req.params.userId
 module.exports.getUser = (req, res, next) => User.findById(req.user._id)
   .orFail(() => next(new ErrorNotFound('Пользователь с указанным _id не найдена.')))
   .then((user) => res.status(STATUS_OK).send({ data: user }))
-  .catch((err) => {
-    if (err.name === 'CastError') {
-      next(new ErrorBadRequest('Переданы некорректные для получения пользователя.'));
-    } else {
-      next(err);
-    }
-  });
+  .catch(next);
 
 module.exports.createUser = (req, res, next) => {
   const {
@@ -124,4 +118,8 @@ module.exports.login = (req, res, next) => {
         .status(STATUS_OK).send({ token });
     })
     .catch(next);
+};
+
+module.exports.signout = (req, res) => {
+  res.clearCookie('jwt').send({ message: 'Выход' });
 };

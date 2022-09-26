@@ -22,7 +22,7 @@ module.exports.createCard = (req, res, next) => {
     });
 };
 
-module.exports.deleteCardByID = (req, res, next) => Card.findByIdAndRemove(req.params.cardId)
+module.exports.deleteCardByID = (req, res, next) => Card.findById(req.params.cardId)
   .orFail(() => next(new ErrorNotFound('Карточка с указанным _id не найдена.')))
   .then((card) => {
     if (card.owner.toString() !== req.user._id) {
